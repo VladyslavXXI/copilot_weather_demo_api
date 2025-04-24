@@ -1,0 +1,258 @@
+openapi: 3.0.1
+info:
+  title: Weather API
+  version: '1.0'
+  description: API for weather by city, add/remove supported cities.
+servers:
+  - url: http://localhost:8000/api
+paths:
+  /weather/:
+    get:
+      summary: Get weather for a city
+      parameters:
+        - in: query
+          name: city
+          schema:
+            type: string
+          required: true
+          description: Name of the city to get weather for
+      responses:
+        '200':
+          description: Weather data
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  location:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                        example: Lviv
+                      region:
+                        type: string
+                        example: ''
+                      country:
+                        type: string
+                        example: Ukraine
+                      lat:
+                        type: number
+                        example: 49.8333
+                      lon:
+                        type: number
+                        example: 24.0
+                      tz_id:
+                        type: string
+                        example: Europe/Kiev
+                      localtime_epoch:
+                        type: integer
+                        example: 1745481063
+                      localtime:
+                        type: string
+                        example: '2025-04-24 10:51'
+                  current:
+                    type: object
+                    properties:
+                      last_updated_epoch:
+                        type: integer
+                        example: 1745480700
+                      last_updated:
+                        type: string
+                        example: '2025-04-24 10:45'
+                      temp_c:
+                        type: number
+                        example: 18.8
+                      temp_f:
+                        type: number
+                        example: 65.9
+                      is_day:
+                        type: integer
+                        example: 1
+                      condition:
+                        type: object
+                        properties:
+                          text:
+                            type: string
+                            example: Sunny
+                          icon:
+                            type: string
+                            example: //cdn.weatherapi.com/weather/64x64/day/113.png
+                          code:
+                            type: integer
+                            example: 1000
+                      wind_mph:
+                        type: number
+                        example: 4.9
+                      wind_kph:
+                        type: number
+                        example: 7.9
+                      wind_degree:
+                        type: integer
+                        example: 139
+                      wind_dir:
+                        type: string
+                        example: SE
+                      pressure_mb:
+                        type: number
+                        example: 1012.0
+                      pressure_in:
+                        type: number
+                        example: 29.88
+                      precip_mm:
+                        type: number
+                        example: 0.0
+                      precip_in:
+                        type: number
+                        example: 0.0
+                      humidity:
+                        type: integer
+                        example: 56
+                      cloud:
+                        type: integer
+                        example: 13
+                      feelslike_c:
+                        type: number
+                        example: 18.8
+                      feelslike_f:
+                        type: number
+                        example: 65.9
+                      windchill_c:
+                        type: number
+                        example: 18.8
+                      windchill_f:
+                        type: number
+                        example: 65.9
+                      heatindex_c:
+                        type: number
+                        example: 18.8
+                      heatindex_f:
+                        type: number
+                        example: 65.9
+                      dewpoint_c:
+                        type: number
+                        example: 9.9
+                      dewpoint_f:
+                        type: number
+                        example: 49.9
+                      vis_km:
+                        type: number
+                        example: 10.0
+                      vis_miles:
+                        type: number
+                        example: 6.0
+                      uv:
+                        type: number
+                        example: 2.4
+                      gust_mph:
+                        type: number
+                        example: 5.7
+                      gust_kph:
+                        type: number
+                        example: 9.1
+        '400':
+          description: Unsupported city or invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /add-city/:
+    post:
+      summary: Add a city to the supported list
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Lviv
+      responses:
+        '201':
+          description: City added
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '200':
+          description: City already exists
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /remove-city/:
+    delete:
+      summary: Remove a city from the supported list
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  example: Odesa
+      responses:
+        '200':
+          description: City removed
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+        '404':
+          description: City not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '400':
+          description: Invalid request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /supported-cities/:
+    get:
+      summary: Get the list of supported cities
+      responses:
+        '200':
+          description: List of supported cities
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  cities:
+                    type: array
+                    items:
+                      type: string
