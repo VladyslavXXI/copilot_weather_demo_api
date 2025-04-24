@@ -1,4 +1,4 @@
-# Presentation plan:
+# Presentation plan
 
 ## LLMs
 
@@ -9,7 +9,7 @@ LLM is quite good with working with words (and also it starts to keep up with im
 So, LLM can pretty nicely read and create everything that can be described with words (or, natural language).
 
 
-## Copilot:
+## Copilot
 
 ### What is copilot.
 Who developed. What advantages (owned by MS, built by GH and they have a lot of data) it has over competitors.
@@ -18,7 +18,7 @@ Who developed. What advantages (owned by MS, built by GH and they have a lot of 
     Code completion: like regular IntelSense but AI powered
     Next code suggestions: tab tab tab coding
 
-### VSC chat Copilot modes **:
+### VSC chat Copilot modes
 
 #### Ask mode
 Limited context - selected code and provided context. No tools or actions. Read only.
@@ -31,6 +31,11 @@ DEMO: chatting with the LLM about specific code part.
 Limited context - selected code and provided context (files, prompts, etc.). No tools or actions. Can edit/create files - needs user to save changed files.
 
 DEMO: ask LLM to add logs to the view file.
+      Show navigation on changes.
+      Keep.
+      Done.
+      Change revert.
+
 
 #### Vibe coding
 Term introduced by Andrej Karpathy.
