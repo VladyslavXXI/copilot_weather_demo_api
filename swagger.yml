@@ -159,6 +159,28 @@ paths:
                 properties:
                   error:
                     type: string
+  /weather/egypt/:
+    get:
+      summary: Get weather for major Egyptian cities (Cairo, Alexandria, Giza)
+      responses:
+        '200':
+          description: Weather data for Egyptian cities
+          content:
+            application/json:
+              schema:
+                type: object
+                additionalProperties:
+                  type: object
+                  description: Weather data or error for each city
+        '400':
+          description: Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
   /add-city/:
     post:
       summary: Add a city to the supported list

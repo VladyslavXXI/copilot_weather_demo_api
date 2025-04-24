@@ -50,3 +50,22 @@ class SupportedCitiesView(APIView):
     def get(self, request):
         cities = City.objects.values_list('name', flat=True)
         return Response({"cities": list(cities)})
+
+class EgyptWeatherView(APIView):
+    def get(self, request):
+        egyptian_cities = ["Cairo", "Alexandria", "Giza"]
+        results = {}
+        for city in egyptian_cities:
+            if not City.objects.filter(name__iexact=city).exists():
+                results[city] = {"error": "City not supported in DB."}
+                continue
+            params = {
+                'key': WEATHER_API_KEY,
+                'q': city
+            }
+            r = requests.get(WEATHER_API_URL, params=params)
+            if r.status_code == 200:
+                results[city] = r.json()
+            else:
+                results[city] = {"error": "Failed to fetch weather."}
+        return Response(results)
